@@ -26,15 +26,30 @@ $(document).ready(function() {
 		element.append(itemsHTML);
 	}
 
+	var removeItem = function (state, itemName) {
+		for (var i = 0 ; i < state.item.length ; i++) {
+			if (itemName === state.item[i]) {
+				state.item.splice(i, 1);
+			}
+		}
+	}
 
 
+	//Add items to shopping list
 	$('#js-shopping-list-form').submit(function (event) {
 		event.preventDefault();
 		addItem(state, $('input').val());
 		renderItems(state, $(".shopping-list"));
-
-
 	});
+	//Delete Items from list
+	$('.shopping-item-delete').on("click", '.shopping-item-delete', function () {
+		var itemName = $(this).parent().siblings(".shopping-item").html();
+		removeItem(state, itemName);
+		console.log(state.item);
+		
+	})
+
+
 
 
 	
