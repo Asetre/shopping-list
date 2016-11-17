@@ -7,6 +7,7 @@ $(document).ready(function() {
 		state.item.push(item);
 	}
 
+	//Render items to html
 	var renderItems = function(state, element) {
 		var itemsHTML = state.item.map(function(items) {
 			var x = '<li>' +
@@ -23,8 +24,10 @@ $(document).ready(function() {
 	      return x;
 		});
 
-		element.append(itemsHTML);
+		element.html(itemsHTML);
 	}
+
+	//Remove Items from state
 
 	var removeItem = function (state, itemName) {
 		for (var i = 0 ; i < state.item.length ; i++) {
@@ -34,7 +37,7 @@ $(document).ready(function() {
 		}
 	}
 
-
+	//Jquery interactions---------------------------
 	//Add items to shopping list
 	$('#js-shopping-list-form').submit(function (event) {
 		event.preventDefault();
@@ -45,12 +48,14 @@ $(document).ready(function() {
 	$('.shopping-item-delete').on("click", '.shopping-item-delete', function () {
 		var itemName = $(this).parent().siblings(".shopping-item").html();
 		removeItem(state, itemName);
-		console.log(state.item);
-		
-	})
+		renderItems(state, $(".shopping-list"));
+	});
 
-
-
+	//Cross off item (check it)
+	$('.shopping-item-toggle').on('click', function(event) {
+		event.preventDefault();
+		$(this).parent().siblings('.shopping-item').addClass('shopping-item__checked');
+	});
 
 	
 });
